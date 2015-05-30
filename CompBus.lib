@@ -14,15 +14,6 @@ import("effect.lib");
 // see process=CompBusMono; for a visual explanation.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  User prefferences
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// up to 85 stereo compressors works, but 86 gives "Invalid Faust Code"
-NrCompressors = 8; //1 for a single compressor doesn't work, use process=FBcomp; instead. doesn't have in and out metering though...
-//2 to 16, can be extended by writing more f(n) functions in SCcomp
-ChanPerComp= 2; //1 for mono doesn't work, use process=CompBusMono; instead, Doesn't have in and out metering though...
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  user interface
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,27 +51,7 @@ displayGR 	= _<:_,(linear2db : meter_group(vbargraph("[4] GR [unit:dB] [tooltip:
 
 gaincomp(x) = compression_gain_mono(ratio,thresh,att,rel,x);
 //gaincomp_stereo = min(gaincomp,gaincomp) ;
-gaincomp_multi(Nr) = f(Nr) with {
-
-f(1)=gaincomp(_);
-f(2)=min( gaincomp(_),gaincomp(_));
-f(3)=f(1),f(2):min;
-//f(n)=f(n-2),f(n-1):min;
-f(4) =par(i,(2),min( gaincomp(_),gaincomp(_))):min;
-f(5) =f(1),f(4):min;
-f(6) =f(2),f(4):min;
-f(7) =f(3),f(4):min;
-f(8) =par(i,4,min( gaincomp(_),gaincomp(_)) ):par(i,(2),min):min;
-f(9) =f(1),f(8):min;
-f(10) =f(2),f(8):min;
-f(11) =f(3),f(8):min;
-f(12) =f(4),f(8):min;
-f(13) =f(5),f(8):min;
-f(14) =f(6),f(8):min;
-f(15) =f(7),f(8):min;
-f(16) =par(i,8,min( gaincomp(_),gaincomp(_)) ):par(i,4,min ):par(i,(2),min):min;
-};
-
+gaincomp_multi(Nr) = par(i,Nr, compression_gain_mono(ratio,thresh,att,rel,_)): seq(j,(log(Nr)/log(2)),par(k,Nr/(2:pow(j+1)),min));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   compressor building blocks
@@ -138,6 +109,4 @@ SCFBplusFF(Ch)= hgroup("Ch %Ch [Ch]",hgroup("",SCFB(ChanPerComp):FFcomp));
 SCplusFF(Ch)= hgroup("Ch %Ch [Ch]",hgroup("",SidechainComp(ChanPerComp):FFcomp));
 
 CompBus=InMeter: (  hgroup("", MultiRouting:(par(i,NrCompressors, SCplusFF(i+1)):>bus(ChanPerComp) )) )  ~  OutMeter ;
-
-process =  CompBus;
 
