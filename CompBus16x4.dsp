@@ -1,4 +1,4 @@
-declare name 		"CompBus";
+declare name 		"CompBus16x4";
 declare version 	"1.1";
 declare author 		"Bart Brouns";
 declare license 	"GNU 3.0";
