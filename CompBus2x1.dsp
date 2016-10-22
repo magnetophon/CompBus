@@ -1,9 +1,8 @@
 declare name 		"CompBus2x1";
-declare version 	"1.1";
+declare version 	"1.1.1";
 declare author 		"Bart Brouns";
 declare license 	"GNU 3.0";
 declare copyright 	"(c) Bart Brouns 2014";
-
 
 import("CompBus.lib");
 
@@ -21,4 +20,3 @@ import("CompBus.lib");
 NrCompressors = 2; //1 for a single compressor doesn't work, use process=FBcomp; instead. doesn't have in and out metering though...
 
 process =  CompBusMono ;
-

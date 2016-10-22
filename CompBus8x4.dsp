@@ -1,9 +1,8 @@
 declare name 		"CompBus8x4";
-declare version 	"1.1";
+declare version 	"1.1.1";
 declare author 		"Bart Brouns";
 declare license 	"GNU 3.0";
 declare copyright 	"(c) Bart Brouns 2014";
-
 
 import("CompBus.lib");
 
@@ -22,6 +21,4 @@ NrCompressors = 8; //1 for a single compressor doesn't work, use process=FBcomp;
 // has to be a power of 2
 ChanPerComp= 4; //1 for mono doesn't work, use process=CompBusMono; instead, Doesn't have in and out metering though...
 
-
 process =  CompBus;
-
