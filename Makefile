@@ -8,10 +8,10 @@ SHELL := /usr/bin/env bash
 DSP_FILES := $(wildcard *.dsp)
 JAQT_TARGETS := $(basename $(DSP_FILES))
 LV2_TARGETS := $(addsuffix .lv2, $(basename $(DSP_FILES)))
-PREFIX := $(DESTDIR)
-BINDIR := $(PREFIX)bin
-LIBDIR := $(PREFIX)lib
-
+DESTDIR ?=
+PREFIX ?= /usr/local
+BINDIR ?= $(DESTDIR)$(PREFIX)/bin
+LIBDIR ?= $(DESTDIR)$(PREFIX)/lib
 .PHONY: all jaqt lv2 install install-jaqt install-lv2 clean
 
 all: jaqt lv2
