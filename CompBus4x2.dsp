@@ -1,8 +1,8 @@
 declare name 		"CompBus4x2";
-declare version 	"1.1.1";
+declare version 	"1.1.2";
 declare author 		"Bart Brouns";
-declare license 	"GNU 3.0";
-declare copyright 	"(c) Bart Brouns 2014";
+declare license 	"AGPL-3.0-only";
+declare copyright 	"(c) Bart Brouns 2023";
 
 import("CompBus.lib");
 
