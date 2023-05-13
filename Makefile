@@ -8,7 +8,7 @@ SHELL := /usr/bin/env bash
 DSP_FILES := $(wildcard *.dsp)
 JAQT_TARGETS := $(basename $(DSP_FILES))
 LV2_TARGETS := $(addsuffix .lv2, $(basename $(DSP_FILES)))
-PREFIX :=
+PREFIX := $(DESTDIR)
 BINDIR := $(PREFIX)bin
 LIBDIR := $(PREFIX)lib
 
