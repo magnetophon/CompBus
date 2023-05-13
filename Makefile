@@ -6,14 +6,11 @@
 
 SHELL := /usr/bin/env bash
 DSP_FILES := $(wildcard *.dsp)
-JAQT_TARGETS := $(basename $(DSP_FILES))
+JAQT_TARGETS := $(addsuffix .jaqt, $(basename $(DSP_FILES)))
 LV2_TARGETS := $(addsuffix .lv2, $(basename $(DSP_FILES)))
 PREFIX :=
 BINDIR := $(PREFIX)bin
 LIBDIR := $(PREFIX)lib
-
-MKDIR ?= mkdir -p
-TOUCH ?= touch
 
 .PHONY: all jaqt lv2 install install-jaqt install-lv2 clean
 
