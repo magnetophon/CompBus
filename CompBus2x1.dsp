@@ -1,7 +1,7 @@
 declare name 		"CompBus2x1";
-declare version 	"1.1.4";
+declare version 	"1.1.5";
 declare author 		"Bart Brouns";
-declare license 	"AGPL-3.0-only";
+declare license 	"GPL-3.0";
 declare copyright 	"(c) Bart Brouns 2023";
 
 import("CompBus.lib");
