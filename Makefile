@@ -1,9 +1,3 @@
-##
-# CompBus
-#
-# @file
-# @version 0.1
-
 SHELL := /usr/bin/env bash
 DSP_FILES := $(wildcard *.dsp)
 JAQT_TARGETS := $(basename $(DSP_FILES))
@@ -21,22 +15,20 @@ jaqt: $(JAQT_TARGETS)
 lv2: $(LV2_TARGETS)
 
 %: %.dsp
-	faust2jaqt -time -vec -double -t 99999 $<
+	faust2jaqt -time -vec -double -t -1 $<
 
 %.lv2: %.dsp
-	faust2lv2 -time -vec -double -gui -t 99999 $<
+	faust2lv2 -time -vec -double -gui -t -1 $<
 
 install-jaqt: $(JAQT_TARGETS)
-	mkdir -p $(DESTDIR)$(BINDIR)
-	$(foreach f, $(JAQT_TARGETS), install -m 755 $(f) $(DESTDIR)$(BINDIR)/$(notdir $(f));)
+	mkdir -p $(BINDIR)
+	$(foreach f, $(JAQT_TARGETS), install -m 755 $(f) $(BINDIR)/$(notdir $(f));)
 
 install-lv2: $(LV2_TARGETS)
-	mkdir -p $(DESTDIR)$(LIBDIR)/lv2
-	$(foreach f, $(LV2_TARGETS), install -m 755 -d $(f) $(DESTDIR)$(LIBDIR)/lv2/$(notdir $(f));)
+	install -d $(LIBDIR)/lv2
+	$(foreach p,$(LV2_TARGETS),cp -rfd $(p) $(LIBDIR)/lv2;)
 
 install: install-jaqt install-lv2
 
 clean:
 	rm -rf $(JAQT_TARGETS) $(LV2_TARGETS)
-
-# end
