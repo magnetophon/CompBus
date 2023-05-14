@@ -1,5 +1,5 @@
 declare name 		"CompBus4x2";
-declare version 	"1.1.3";
+declare version 	"1.1.4";
 declare author 		"Bart Brouns";
 declare license 	"AGPL-3.0-only";
 declare copyright 	"(c) Bart Brouns 2023";
