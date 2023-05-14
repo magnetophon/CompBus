@@ -6,6 +6,9 @@ DESTDIR ?=
 PREFIX ?= /usr/local
 BINDIR ?= $(DESTDIR)$(PREFIX)/bin
 LIBDIR ?= $(DESTDIR)$(PREFIX)/lib
+LV2_URI_PREFIX := https://magnetophon.nl
+
+
 .PHONY: all jaqt lv2 install install-jaqt install-lv2 clean
 
 all: jaqt lv2
@@ -18,10 +21,10 @@ lv2: $(LV2_TARGETS)
 	faust2jaqt -time -vec -double -t -1 $<
 
 %.lv2: %.dsp
-	faust2lv2 -time -vec -double -gui -t -1 $<
+	faust2lv2 -uri-prefix $(LV2_URI_PREFIX) -time -vec -double -gui -t -1 $<
 
 install-jaqt: $(JAQT_TARGETS)
-	mkdir -p $(BINDIR)
+	install -d $(BINDIR)
 	$(foreach f, $(JAQT_TARGETS), install -m 755 $(f) $(BINDIR)/$(notdir $(f));)
 
 install-lv2: $(LV2_TARGETS)
